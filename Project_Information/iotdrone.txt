@@ -1,0 +1,14 @@
+problem: In India most of the farmers are small land holders and if any farmer want to use drone technology in agriculture so they must be have training to control or use those drones. and all the existing drones are controlled by mobile application or remote control.
+sol: Automation: here we are design the automation for drones do that jobs or works in 3 ways. one is using manual flags or some object to detect the boundaries and restricted to that boundry. 
+the second one is using a mobile application or website in that website user or farmer  plot the his/her land then that send to drones to only do task in that area . and last one is using a mobile application or website in that website user or farmer  walk across the boards of his/her land.
+
+problem: in nowadays farmers to sowing the seeds they need more number of farmers and increase the cost of the labour and more time consuming and its hard to cover large area
+sol:drone seed sowing: here oin order to over come this problem we introduced seed sowing by drones it enables speed and efficiency and cover large area in less time.
+
+problem: in existing drones tech  in agriculture sector in India are limited to one functionality.
+sol: so we updated and design the   drones in such a way that can do more functionality with attachable and detachable tools like sprying tanks, fertilizers sprying tanks, and other things.
+
+crop monitoring: this feature enables that firstly analysis the crop first before doing any work 
+for example if any crop consists different levels(like one part have good health, one part is modrate and some area is bad in health) so it create/fill portions of  map/image with different colors then based on those colors drones do work. and by using this efficenty allocate the resourecs to the crpos 
+
+for example, if 1 acre of land is paddy, firstly drone analyzes the crop and fills the portions of map like red color for bad , yellow for moderate and green for good so the drone do work according to that for example a drone want to sprying the urea then according to regions drone do it like red region more quanity and green less and etc
