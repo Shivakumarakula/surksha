@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success - Suraksha</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        .success-gif {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+        }
+
+        p {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .success-message {
+            color: #00ddeb;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(0, 221, 235, 0.5); }
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 0.8s ease-out;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; max-width: 600px; }
+            h2 { font-size: 1.8rem; }
+            .success-gif { max-width: 150px; }
+            p { font-size: 0.9rem; }
+            button { font-size: 1rem; padding: 8px 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 10px; max-width: 100%; }
+            h2 { font-size: 1.5rem; }
+            .success-gif { max-width: 120px; }
+            p { font-size: 0.8rem; }
+            button { font-size: 0.9rem; padding: 6px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Payment Successful</h2>
+        <img src="{% static 'images/payment_success.webp' %}" alt="Success Animation" class="success-gif">
+        <p class="success-message">Thank you for your purchase!</p>
+        <p><strong>Device:</strong> {{ device_name }}</p>
+        <p><strong>Customization:</strong> {{ customization }}</p>
+        <p><strong>Delivery Address:</strong> {{ address }}</p>
+        <p><strong>Amount Paid:</strong> ₹{{ amount }}</p>
+        <p><strong>Payment ID:</strong> {{ payment_id }}</p>
+        <a href="{% url 'dashboard' %}"><button>Back to Dashboard</button></a>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 4 + 2;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 15;
+                const offsetY = (Math.random() - 0.5) * 15;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 800);
+            }
+        });
+    </script>
+</body>
+</html>

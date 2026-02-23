@@ -1,0 +1,993 @@
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - {{ device.name }} Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .detail-label {
+            color: #00ddeb;
+            font-weight: bold;
+        }
+
+        a.back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+        }
+
+        a.back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(0, 221, 235, 0.5); }
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 0.8s ease-out;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; max-width: 600px; }
+            h1 { font-size: 2rem; }
+            img { max-width: 200px; }
+            p { font-size: 1rem; }
+            a.back-btn { font-size: 1rem; padding: 8px 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 10px; max-width: 100%; }
+            h1 { font-size: 1.5rem; }
+            img { max-width: 150px; }
+            p { font-size: 0.9rem; }
+            a.back-btn { font-size: 0.9rem; padding: 6px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ device.name }}</h1>
+        <img src="{% static 'images/'|add:device.type|add:'.webp' %}" alt="{{ device.name }}">
+        <p><span class="detail-label">Device ID:</span> {{ device.device_id }}</p>
+        <p><span class="detail-label">Type:</span> {{ device.type|title }}</p>
+        <p><span class="detail-label">Owner:</span> {{ device.user.username }}</p>
+        <a href="{% url 'dashboard' %}" class="back-btn">Back to Dashboard</a>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 4 + 2;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 15;
+                const offsetY = (Math.random() - 0.5) * 15;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 800);
+            }
+        });
+    </script>
+</body>
+</html> {% endcomment %}
+
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - {{ device.name }} Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .detail-label {
+            color: #00ddeb;
+            font-weight: bold;
+        }
+
+        a.back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+        }
+
+        a.back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(0, 221, 235, 0.5); }
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 0.8s ease-out;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; max-width: 600px; }
+            h1 { font-size: 2rem; }
+            img { max-width: 200px; }
+            p { font-size: 1rem; }
+            a.back-btn { font-size: 1rem; padding: 8px 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 10px; max-width: 100%; }
+            h1 { font-size: 1.5rem; }
+            img { max-width: 150px; }
+            p { font-size: 0.9rem; }
+            a.back-btn { font-size: 0.9rem; padding: 6px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ device.name }}</h1>
+        {% if device.name == "Smart Sensor X1" %}
+            <img src="{% static 'images/ring.webp' %}" alt="{{ device.name }}">
+        {% elif device.name == "Actuator Pro" %}
+            <img src="{% static 'images/ring2.jpg' %}" alt="{{ device.name }}">
+        {% elif device.name == "Controller Hub" %}
+            <img src="{% static 'images/ring3.jpg' %}" alt="{{ device.name }}">
+        {% else %}
+            <img src="{% static 'images/default.webp' %}" alt="{{ device.name }}">
+        {% endif %}
+        <p><span class="detail-label">Device ID:</span> {{ device.device_id }}</p>
+        <p><span class="detail-label">Type:</span> {{ device.type|title }}</p>
+        <p><span class="detail-label">Owner:</span> {{user }}</p>
+        <a href="{% url 'dashboard' %}" class="back-btn">Back to Dashboard</a>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 4 + 2;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 15;
+                const offsetY = (Math.random() - 0.5) * 15;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 800);
+            }
+        });
+    </script>
+</body>
+</html> {% endcomment %}
+
+{% comment %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - {{ device.name }} Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .detail-label {
+            color: #00ddeb;
+            font-weight: bold;
+        }
+
+        a.back-btn, button.voice-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        a.back-btn:hover, button.voice-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        button.voice-btn.recording {
+            background: linear-gradient(90deg, #ff4081, #00ddeb);
+        }
+
+        button.voice-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        #status {
+            font-size: 1rem;
+            color: #ff4081;
+            margin-top: 10px;
+        }
+
+        #download-webm {
+            margin-top: 10px;
+            color: #00ddeb;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(0, 221, 235, 0.5); }
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 0.8s ease-out;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; max-width: 600px; }
+            h1 { font-size: 2rem; }
+            img { max-width: 200px; }
+            p { font-size: 1rem; }
+            a.back-btn, button.voice-btn { font-size: 1rem; padding: 8px 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 10px; max-width: 100%; }
+            h1 { font-size: 1.5rem; }
+            img { max-width: 150px; }
+            p { font-size: 0.9rem; }
+            a.back-btn, button.voice-btn { font-size: 0.9rem; padding: 6px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ device.name }}</h1>
+        {% if device.name == "Smart Sensor X1" %}
+            <img src="{% static 'images/ring.png' %}" alt="{{ device.name }}">
+        {% elif device.name == "Actuator Pro" %}
+            <img src="{% static 'images/ring2.jpg' %}" alt="{{ device.name }}">
+        {% elif device.name == "Controller Hub" %}
+            <img src="{% static 'images/ring3.webp' %}" alt="{{ device.name }}">
+        {% else %}
+            <img src="{% static 'images/default.webp' %}" alt="{{ device.name }}">
+        {% endif %}
+        <p><span class="detail-label">Device ID:</span> {{ device.device_id }}</p>
+        <p><span class="detail-label">Type:</span> {{ device.type|title }}</p>
+        <p><span class="detail-label">Owner:</span> {{ device.user.username }}</p>
+        <button class="voice-btn" id="voice-assistant">Start Voice Assistant</button>
+        <p id="status"></p>
+        <a id="download-webm" style="display: none;" download="raw_recording.webm">Download Raw WebM</a>
+        <a href="{% url 'dashboard' %}" class="back-btn">Back to Dashboard</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+    <script>
+        const voiceBtn = document.getElementById('voice-assistant');
+        const status = document.getElementById('status');
+        const downloadWebmLink = document.getElementById('download-webm');
+        let mediaRecorder;
+        let audioChunks = [];
+        let recognition;
+
+        console.log('MediaDevices supported:', !!navigator.mediaDevices);
+        console.log('SpeechRecognition supported:', !!(window.SpeechRecognition || window.webkitSpeechRecognition));
+
+        if (!navigator.mediaDevices || (!window.SpeechRecognition && !window.webkitSpeechRecognition)) {
+            status.textContent = 'Voice Assistant not supported in this browser. Use Chrome.';
+            voiceBtn.disabled = true;
+            voiceBtn.textContent = 'Voice Assistant Unavailable';
+        } else {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            voiceBtn.addEventListener('click', () => {
+                if (voiceBtn.classList.contains('recording')) {
+                    stopRecording();
+                } else {
+                    startRecording();
+                }
+            });
+
+            function startRecording() {
+                audioChunks = [];
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        console.log('Microphone access granted');
+                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder.start();
+                        voiceBtn.textContent = 'Recording... Say "thank you" to stop';
+                        voiceBtn.classList.add('recording');
+                        status.textContent = 'Recording started...';
+
+                        mediaRecorder.ondataavailable = (e) => {
+                            console.log('Audio data received, size:', e.data.size);
+                            audioChunks.push(e.data);
+                        };
+
+                        mediaRecorder.onstop = () => {
+                            console.log('Recording stopped, total chunks:', audioChunks.length);
+                            processAudio(audioChunks);
+                            stream.getTracks().forEach(track => track.stop());
+                        };
+
+                        recognition.start();
+                        recognition.onresult = (event) => {
+                            const transcript = Array.from(event.results)
+                                .map(result => result[0].transcript)
+                                .join('');
+                            console.log('Speech detected:', transcript);
+                            if (transcript.toLowerCase().includes('thank you')) {
+                                stopRecording();
+                            }
+                        };
+
+                        recognition.onerror = (event) => {
+                            console.error('Speech recognition error:', event.error);
+                            status.textContent = 'Speech recognition failed: ' + event.error;
+                            stopRecording();
+                        };
+                    })
+                    .catch(err => {
+                        console.error('Error accessing microphone:', err);
+                        status.textContent = 'Could not access microphone: ' + err.message;
+                        voiceBtn.textContent = 'Start Voice Assistant';
+                    });
+            }
+
+            function stopRecording() {
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                }
+                recognition.stop();
+                voiceBtn.textContent = 'Start Voice Assistant';
+                voiceBtn.classList.remove('recording');
+                status.textContent = 'Processing audio...';
+            }
+
+            function processAudio(chunks) {
+                const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+                console.log('Raw WebM size:', audioBlob.size);
+
+                // Offer raw WebM for download to test
+                downloadWebmLink.href = URL.createObjectURL(audioBlob);
+                downloadWebmLink.style.display = 'block';
+
+                if (audioBlob.size === 0) {
+                    status.textContent = 'Error: No audio data recorded';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.readAsArrayBuffer(audioBlob);
+                reader.onloadend = () => {
+                    const audioBuffer = reader.result;
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    audioContext.decodeAudioData(audioBuffer, (decodedData) => {
+                        console.log('Decoded audio duration:', decodedData.duration);
+                        const mp3Encoder = new lamejs.Mp3Encoder(1, decodedData.sampleRate, 128);
+                        const samples = decodedData.getChannelData(0);
+                        const mp3Data = [];
+                        const sampleBlockSize = 1152;
+
+                        for (let i = 0; i < samples.length; i += sampleBlockSize) {
+                            const sampleChunk = samples.subarray(i, i + sampleBlockSize);
+                            const mp3buf = mp3Encoder.encodeBuffer(Float32Array.from(sampleChunk));
+                            if (mp3buf.length > 0) {
+                                mp3Data.push(mp3buf);
+                            }
+                        }
+                        const mp3buf = mp3Encoder.flush();
+                        if (mp3buf.length > 0) {
+                            mp3Data.push(mp3buf);
+                        }
+
+                        const mp3Blob = new Blob(mp3Data, { type: 'audio/mp3' });
+                        console.log('MP3 size:', mp3Blob.size);
+                        sendAudioToServer(mp3Blob);
+                    }, (err) => {
+                        console.error('Audio decode error:', err);
+                        status.textContent = 'Error processing audio';
+                    });
+                };
+            }
+
+            function sendAudioToServer(mp3Blob) {
+                const formData = new FormData();
+                formData.append('audio', mp3Blob, `recording_${Date.now()}.mp3`);
+
+                fetch("{% url 'handle_voice_assistant' %}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Server error:', data.error);
+                        status.textContent = 'Error: ' + data.error;
+                    } else {
+                        console.log('Audio saved:', data);
+                        status.textContent = `Audio saved at ${data.timestamp} (ID: ${data.id})`;
+                    }
+                })
+                .catch(err => {
+                    console.error('Fetch error:', err);
+                    status.textContent = 'Failed to save audio.';
+                });
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 4 + 2;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 15;
+                const offsetY = (Math.random() - 0.5) * 15;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 800);
+            }
+        });
+    </script>
+</body>
+</html> {% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - {{ device.name }} Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .detail-label {
+            color: #00ddeb;
+            font-weight: bold;
+        }
+
+        a.back-btn, button.voice-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        a.back-btn:hover, button.voice-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        button.voice-btn.recording {
+            background: linear-gradient(90deg, #ff4081, #00ddeb);
+        }
+
+        button.voice-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        #status {
+            font-size: 1rem;
+            color: #ff4081;
+            margin-top: 10px;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(0, 221, 235, 0.5); }
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 0.8s ease-out;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; max-width: 600px; }
+            h1 { font-size: 2rem; }
+            img { max-width: 200px; }
+            p { font-size: 1rem; }
+            a.back-btn, button.voice-btn { font-size: 1rem; padding: 8px 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 10px; max-width: 100%; }
+            h1 { font-size: 1.5rem; }
+            img { max-width: 150px; }
+            p { font-size: 0.9rem; }
+            a.back-btn, button.voice-btn { font-size: 0.9rem; padding: 6px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ device.name }}</h1>
+        {% if device.name == "Smart Sensor X1" %}
+            <img src="{% static 'images/ring.png' %}" alt="{{ device.name }}">
+        {% elif device.name == "Actuator Pro" %}
+            <img src="{% static 'images/ring2.jpg' %}" alt="{{ device.name }}">
+        {% elif device.name == "Controller Hub" %}
+            <img src="{% static 'images/ring3.webp' %}" alt="{{ device.name }}">
+        {% else %}
+            <img src="{% static 'images/default.webp' %}" alt="{{ device.name }}">
+        {% endif %}
+        <p><span class="detail-label">Device ID:</span> {{ device.device_id }}</p>
+        <p><span class="detail-label">Type:</span> {{ device.type|title }}</p>
+        <p><span class="detail-label">Owner:</span> {{ device.user.username }}</p>
+        <button class="voice-btn" id="voice-assistant">Start Voice Assistant</button>
+        <p id="status"></p>
+        <a href="{% url 'dashboard' %}" class="back-btn">Back to Dashboard</a>
+    </div>
+
+    <script>
+        const voiceBtn = document.getElementById('voice-assistant');
+        const status = document.getElementById('status');
+        let mediaRecorder;
+        let audioChunks = [];
+        let recognition;
+
+        console.log('MediaDevices supported:', !!navigator.mediaDevices);
+        console.log('SpeechRecognition supported:', !!(window.SpeechRecognition || window.webkitSpeechRecognition));
+
+        if (!navigator.mediaDevices || (!window.SpeechRecognition && !window.webkitSpeechRecognition)) {
+            status.textContent = 'Voice Assistant not supported in this browser. Use Chrome.';
+            voiceBtn.disabled = true;
+            voiceBtn.textContent = 'Voice Assistant Unavailable';
+        } else {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            voiceBtn.addEventListener('click', () => {
+                if (voiceBtn.classList.contains('recording')) {
+                    stopRecording();
+                } else {
+                    startRecording();
+                }
+            });
+
+            function startRecording() {
+                audioChunks = [];
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        console.log('Microphone access granted');
+                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder.start();
+                        voiceBtn.textContent = 'Recording... Say "thank you" to stop';
+                        voiceBtn.classList.add('recording');
+                        status.textContent = 'Recording started...';
+
+                        mediaRecorder.ondataavailable = (e) => {
+                            console.log('Audio data received, size:', e.data.size);
+                            audioChunks.push(e.data);
+                        };
+
+                        mediaRecorder.onstop = () => {
+                            console.log('Recording stopped, total chunks:', audioChunks.length);
+                            processAudio(audioChunks);
+                            stream.getTracks().forEach(track => track.stop());
+                        };
+
+                        recognition.start();
+                        recognition.onresult = (event) => {
+                            const transcript = Array.from(event.results)
+                                .map(result => result[0].transcript)
+                                .join('');
+                            console.log('Speech detected:', transcript);
+                            if (transcript.toLowerCase().includes('done')) {
+                                stopRecording();
+                            }
+                        };
+
+                        recognition.onerror = (event) => {
+                            console.error('Speech recognition error:', event.error);
+                            status.textContent = 'Speech recognition failed: ' + event.error;
+                            stopRecording();
+                        };
+                    })
+                    .catch(err => {
+                        console.error('Error accessing microphone:', err);
+                        status.textContent = 'Could not access microphone: ' + err.message;
+                        voiceBtn.textContent = 'Start Voice Assistant';
+                    });
+            }
+
+            function stopRecording() {
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                }
+                recognition.stop();
+                voiceBtn.textContent = 'Start Voice Assistant';
+                voiceBtn.classList.remove('recording');
+                status.textContent = 'Processing audio...';
+            }
+
+            function processAudio(chunks) {
+                const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+                console.log('WebM size:', audioBlob.size);
+
+                if (audioBlob.size === 0) {
+                    status.textContent = 'Error: No audio data recorded';
+                    return;
+                }
+
+                sendAudioToServer(audioBlob);
+            }
+
+            function sendAudioToServer(audioBlob) {
+                const formData = new FormData();
+                formData.append('audio', audioBlob, `recording_${Date.now()}.webm`);
+
+                fetch("{% url 'handle_voice_assistant' %}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Server error:', data.error);
+                        status.textContent = 'Error: ' + data.error;
+                    } else {
+                        console.log('Audio saved:', data);
+                        status.textContent = `WebM saved at ${data.timestamp} (ID: ${data.id})`;
+                    }
+                })
+                .catch(err => {
+                    console.error('Fetch error:', err);
+                    status.textContent = 'Failed to save audio.';
+                });
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 4 + 2;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 15;
+                const offsetY = (Math.random() - 0.5) * 15;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 800);
+            }
+        });
+    </script>
+</body>
+</html>

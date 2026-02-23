@@ -1,0 +1,644 @@
+{% comment %} {% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover {
+            color: #00ddeb;
+        }
+
+        /* Main Content */
+        .hero {
+            text-align: center;
+            padding: 120px 20px 60px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .project-info {
+            padding: 60px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 350px;
+            text-align: center;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .info-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 221, 235, 0.5); }
+        }
+
+        /* Mouse Move Stars */
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 1s ease-out;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(2) rotate(180deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; }
+            .logo { font-size: 1.5rem; }
+            .nav-links { gap: 20px; }
+            .nav-links li a { font-size: 1rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .info-card { max-width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .navbar { flex-direction: column; padding: 10px; }
+            .nav-links { flex-direction: column; gap: 10px; margin-top: 10px; }
+            .hero { padding: 100px 10px 40px; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Suraksha</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#signup">Sign Up</a></li>
+            <li><a href="#signin">Sign In</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to Suraksha</h1>
+        <p>Your safety, our priority. A cutting-edge IoT solution for instant alerts and peace of mind.</p>
+    </section>
+
+    <!-- Project Info -->
+    <section class="project-info">
+        <div class="info-card" style="--i: 1;">
+            <img src="{% static "images/oneclick.jpg" %}" alt="IoT Button">
+            <h2>One-Click Safety</h2>
+            <p>Press a button on our IoT device to trigger instant alerts to your registered contacts.</p>
+        </div>
+        <div class="info-card" style="--i: 2;">
+            <img src="{% static 'images/mca.jpeg' %}" alt="Alerts">
+            <h2>Multi-Channel Alerts</h2>
+            <p>Receive notifications via SMS, email, or app—whichever suits you best.</p>
+        </div>
+        <div class="info-card" style="--i: 3;">
+            <img src="{% static 'images/lovedones.jpg' %}" alt="Team">
+            <h2>Built for You</h2>
+            <p>Designed by a passionate team to keep you and your loved ones safe.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Suraksha. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mouse move star effect
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 3; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 5 + 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 1000);
+            }
+        });
+    </script>
+</body>
+</html> {% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover {
+            color: #00ddeb;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 120px 20px 60px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            animation: buttonFadeIn 0.5s ease-in 0.5s forwards;
+            opacity: 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .how-it-works h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .step {
+            max-width: 300px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: scaleUp 0.6s ease-out forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .feature {
+            max-width: 250px;
+            padding: 20px;
+            transform: rotateY(90deg);
+            opacity: 0;
+            animation: flipIn 0.8s ease-out forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .feature img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+
+        /* Project Info */
+        .project-info {
+            padding: 60px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 350px;
+            text-align: center;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .info-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links li a {
+            color: #00ddeb;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links li a:hover {
+            color: #ff4081;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes scaleUp {
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes flipIn {
+            to { transform: rotateY(0deg); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 221, 235, 0.5); }
+        }
+
+        @keyframes buttonFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Mouse Move Stars */
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 1s ease-out;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(2) rotate(180deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; }
+            .logo { font-size: 1.5rem; }
+            .nav-links { gap: 20px; }
+            .nav-links li a { font-size: 1rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .cta-btn { font-size: 1rem; padding: 10px 25px; }
+            .how-it-works h2, .features h2 { font-size: 2rem; }
+            .step, .feature, .info-card { max-width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .navbar { flex-direction: column; padding: 10px; }
+            .nav-links { flex-direction: column; gap: 10px; margin-top: 10px; }
+            .hero { padding: 100px 10px 40px; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.9rem; }
+            .cta-btn { font-size: 0.9rem; padding: 8px 20px; }
+            .footer-links { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Suraksha</div>
+        <ul class="nav-links">
+            <li><a href="{% url "about" %}">About</a></li>
+            <li><a href="{% url "services" %}">Services</a></li>
+            <li><a href="{% url "signup" %}">Sign Up</a></li>
+            <li><a href="{% url "login" %}">Sign In</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to Suraksha</h1>
+        <p>Your safety, our priority. A cutting-edge IoT solution for instant alerts and peace of mind in emergencies.</p>
+        <a href="{% url "user_register" %}" class="cta-btn">Get Started</a>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step" style="--i: 1;">
+                <h3>1. Press the Button</h3>
+                <p>Activate the Suraksha IoT device with a single press in any emergency situation.</p>
+            </div>
+            <div class="step" style="--i: 2;">
+                <h3>2. Alert Sent</h3>
+                <p>Our system instantly sends notifications to your registered contacts via SMS, email, or app.</p>
+            </div>
+            <div class="step" style="--i: 3;">
+                <h3>3. Stay Safe</h3>
+                <p>Your loved ones or authorities respond quickly, ensuring your safety is prioritized.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Why Choose Suraksha?</h2>
+        <div class="feature-list">
+            <div class="feature" style="--i: 1;">
+                <img src="{% static 'images/alert.webp' %}" alt="Instant Alerts">
+                <h3>Instant Alerts</h3>
+                <p>Real-time notifications delivered in seconds.</p>
+            </div>
+            <div class="feature" style="--i: 2;">
+                <img src="{% static 'images/cus.jpg' %}" alt="Customizable">
+                <h3>Customizable</h3>
+                <p>Choose your preferred communication channels.</p>
+            </div>
+            <div class="feature" style="--i: 3;">
+                <img src="{% static 'images/r.png' %}" alt="Reliable">
+                <h3>Reliable</h3>
+                <p>Built with robust technology for dependable performance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Info -->
+    <section class="project-info">
+        <div class="info-card" style="--i: 1;">
+            <img src="{% static 'images/oneclick.jpg' %}" alt="IoT Button">
+            <h2>One-Click Safety</h2>
+            <p>Press a button on our IoT device to trigger instant alerts to your registered contacts.</p>
+        </div>
+        <div class="info-card" style="--i: 2;">
+            <img src="{% static 'images/mca.jpeg' %}" alt="Alerts">
+            <h2>Multi-Channel Alerts</h2>
+            <p>Receive notifications via SMS, email, or app—whichever suits you best.</p>
+        </div>
+        <div class="info-card" style="--i: 3;">
+            <img src="{% static 'images/lovedones.jpg' %}" alt="Team">
+            <h2>Built for You</h2>
+            <p>Designed by a passionate team to keep you and your loved ones safe.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Suraksha. All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms of Service</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        // Mouse move star effect
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 3; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 5 + 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 1000);
+            }
+        });
+    </script>
+</body>
+</html>

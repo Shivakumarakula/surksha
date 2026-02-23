@@ -1,0 +1,273 @@
+{% comment %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+.register-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.register-button:hover {
+    background-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Website</h1>
+        {% comment %} <a href="loginpage.html" class="login-button">Login</a> {% endcomment %
+        <a href="/login" class="login-button">Login</a>
+        <br>
+        <br><br>
+        {% comment %} <a href="signup.html" class="login-button">register</a> {% endcomment %
+        <a href="/signup" class="login-button">register</a>
+    </div>
+
+    <script>
+        function handleLogin() {
+            alert("Login button clicked!");
+            // Here you can add more logic to handle the login process
+        }
+        function handleRegister() {
+            alert("register button clicked!");
+            // Here you can add more logic to handle the login process
+        }
+    </script>
+
+</body>
+</html> {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - Safety at Your Fingertips</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            overflow: hidden;
+        }
+
+        /* Main Content */
+        .content {
+            text-align: center;
+            color: #fff;
+            opacity: 0;
+            animation: fadeIn 1s ease-in 2s forwards;
+        }
+
+        h1 {
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: glow 2s infinite alternate, slideIn 1s ease-out;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin: 10px 0 20px;
+            color: #e0e0e0;
+        }
+
+        /* Loading Bar */
+        .loader {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            position: relative;
+            margin: 0 auto;
+        }
+        .loader-bar {
+            width: 0;
+            height: 100%;
+            background: #00e676;
+            animation: load 2s ease-in-out forwards;
+        }
+
+        /* Let's Go Button */
+        .lets-go-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: buttonFadeIn 0.5s ease-in 2.5s forwards;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .lets-go-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        @keyframes load {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 221, 235, 0.5); }
+        }
+
+        @keyframes buttonFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Enhanced Mouse Move Stars */
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 1s ease-out;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(2) rotate(180deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            p { font-size: 1.2rem; }
+            .loader { width: 150px; }
+            .lets-go-btn { font-size: 1rem; padding: 10px 25px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            p { font-size: 1rem; }
+            .loader { width: 120px; }
+            .lets-go-btn { font-size: 0.9rem; padding: 8px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Content -->
+    <div class="content">
+        <h1>Suraksha</h1>
+        <p>Safety at Your Fingertips</p>
+        <!-- Loading Bar -->
+        <div class="loader">
+            <div class="loader-bar"></div>
+        </div>
+        <!-- Let's Go Button -->
+        <button class="lets-go-btn">Let's Go</button>
+    </div>
+
+    <script>
+        // Fade out loader after animation
+        const loader = document.querySelector('.loader');
+        setTimeout(() => {
+            loader.style.opacity = '0';
+            loader.style.transition = 'opacity 0.5s';
+            setTimeout(() => loader.remove(), 500);
+        }, 2000);
+
+        // Enhanced mouse move star effect
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 3; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 5 + 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 1000);
+            }
+        });
+
+        // Button click handler (example: redirect to dashboard)
+        const button = document.querySelector('.lets-go-btn');
+        button.addEventListener('click', () => {
+            window.location.href = '/homepage2'; // Replace with your actual route
+        });
+    </script>
+</body>
+</html>

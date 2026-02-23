@@ -1,0 +1,512 @@
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        /* Main Content */
+        .services-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            text-align: center;
+        }
+
+        .services-container h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate, fadeIn 1s ease-in;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 350px;
+            margin: 20px auto;
+            opacity: 0;
+            transform: scale(0.9) rotate(-5deg);
+            animation: popIn 0.6s ease-out forwards;
+            animation-delay: calc(0.2s * var(--i));
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: scale(1.05) rotate(0deg);
+        }
+
+        .service-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .service-card img {
+            width: 100%;
+            max-width: 300px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 221, 235, 0.5); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.9) rotate(-5deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Mouse Move Stars */
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 1s ease-out;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(2) rotate(180deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .services-container h1 { font-size: 2.5rem; }
+            .service-card { max-width: 100%; }
+            .service-card h2 { font-size: 1.6rem; }
+            .service-card p { font-size: 0.9rem; }
+            .service-card img { max-width: 250px; height: 150px; }
+            .back-btn { font-size: 0.9rem; padding: 8px 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .services-container { margin: 40px auto; }
+            .services-container h1 { font-size: 2rem; }
+            .service-card h2 { font-size: 1.4rem; }
+            .service-card p { font-size: 0.85rem; }
+            .service-card img { max-width: 200px; height: 120px; }
+            .back-btn { top: 10px; left: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-btn" onclick="window.location.href='/homepage2'">Back to Home</button>
+
+    <!-- Services Content -->
+    <div class="services-container">
+        <h1>Our Services</h1>
+
+        <div class="service-card" style="--i: 1;">
+            <img src="{% static 'images/oneclick.jpg' %}" alt="IoT Device">
+            <h2>IoT Safety Device</h2>
+            <p>Our core service is the Suraksha IoT device—a compact gadget with buttons, a speaker/recorder, and glowing blue border lights. Activate it with a press to trigger instant safety measures tailored to your needs.</p>
+        </div>
+
+        <div class="service-card" style="--i: 2;">
+            <img src="{% static 'images/mca.jpeg' %}" alt="Multi-Channel Alerts">
+            <h2>SMS, Phone Call, Email & WhatsApp Alerts</h2>
+            <p>With a single click, send your location to registered contacts via SMS, phone calls, email, or WhatsApp. Long press to record a message, ensuring your emergency is communicated clearly across multiple channels.</p>
+        </div>
+
+        <div class="service-card" style="--i: 3;">
+            <img src="{% static 'images/police.jpg' %}" alt="Help Center Alerts">
+            <h2>Alerts to Police & Nearby Help Centers</h2>
+            <p>In critical situations, use a custom keyword (e.g., "help me") during a long press to send your location and recorded message to nearby police stations, health centers, or fire services for rapid response.</p>
+        </div>
+
+        <div class="service-card" style="--i: 4;">
+            <img src="{% static 'images/drone.jpg' %}" alt="Drone Safety">
+            <h2>Drone Safety Support</h2>
+            <p>Our future-ready service deploys a smart drone to your location upon an alert. It assesses the scene and coordinates with authorities, overcoming delays like traffic for fast, precise assistance.</p>
+        </div>
+
+        <div class="service-card" style="--i: 5;">
+            <img src="{% static 'images/voice.png' %}" alt="Voice Assistance">
+            <h2>Voice Assistance</h2>
+            <p>Activate the voice assistant with a custom phrase (e.g., "Activate Suraksha") to issue hands-free commands—get help, navigate to safety, or control the device effortlessly in emergencies.</p>
+        </div>
+
+        <div class="service-card" style="--i: 6;">
+            <img src="{% static 'images/customizable.png' %}" alt="Customization">
+            <h2>Device Customization</h2>
+            <p>Personalize your Suraksha experience through our website—choose device templates, set communication links, and define voice assistant settings to match your unique safety needs.</p>
+        </div>
+    </div>
+
+    <script>
+        // Mouse move star effect
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 3; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 5 + 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 1000);
+            }
+        });
+    </script>
+</body>
+</html> {% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        /* Main Content */
+        .services-container {
+            max-width: 1400px;
+            margin: 60px auto;
+            text-align: center;
+        }
+
+        .services-container h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate, fadeIn 1s ease-in;
+            margin-bottom: 40px;
+        }
+
+        .service-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateX(-100%);
+            animation: slideIn 0.8s ease-out forwards;
+            animation-delay: calc(0.2s * var(--i));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .service-section:nth-child(even) {
+            transform: translateX(100%);
+            flex-direction: row-reverse;
+        }
+
+        .service-content {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+
+        .service-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .service-content p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .service-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .service-image img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .service-image img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 221, 235, 0.5); }
+        }
+
+        @keyframes slideIn {
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Mouse Move Stars */
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 1s ease-out;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(2) rotate(180deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .services-container h1 { font-size: 2.5rem; }
+            .service-section { flex-direction: column; padding: 30px 15px; }
+            .service-section:nth-child(even) { flex-direction: column; }
+            .service-content h2 { font-size: 1.8rem; }
+            .service-content p { font-size: 1rem; }
+            .service-image img { max-width: 400px; }
+            .back-btn { font-size: 0.9rem; padding: 8px 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .services-container { margin: 40px auto; }
+            .services-container h1 { font-size: 2rem; }
+            .service-section { padding: 20px 10px; }
+            .service-content h2 { font-size: 1.6rem; }
+            .service-content p { font-size: 0.9rem; }
+            .service-image img { max-width: 300px; }
+            .back-btn { top: 10px; left: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-btn" onclick="window.location.href='/homepage2'">Back to Home</button>
+
+    <!-- Services Content -->
+    <div class="services-container">
+        <h1>Our Services</h1>
+
+        <div class="service-section" style="--i: 1;">
+            <div class="service-content">
+                <h2>IoT Safety Device</h2>
+                <p>The heart of Suraksha is our IoT device—a sleek, portable gadget with buttons, a speaker/recorder, and blue LED border lights that activate on startup. Designed for emergencies, it’s your instant connection to safety, triggered with a single press or voice command.</p>
+            </div>
+            <div class="service-image">
+                <img src="{% static 'images/oneclick.jpg' %}" alt="IoT Device">
+            </div>
+        </div>
+
+        <div class="service-section" style="--i: 2;">
+            <div class="service-content">
+                <h2>SMS Alerts</h2>
+                <p>With a single click on the Suraksha device, send your precise location via SMS to registered contacts—parents, friends, or anyone you trust. It’s fast, reliable, and ensures help is just a message away.</p>
+            </div>
+            <div class="service-image">
+                <img src="{% static 'images/sms.jpg' %}" alt="SMS Alerts">
+            </div>
+        </div>
+
+        <div class="service-section" style="--i: 3;">
+            <div class="service-content">
+                <h2>Phone Call Notifications</h2>
+                <p>Opt for an automated phone call alert with a pre-recorded message and your location details. This service ensures your emergency reaches your contacts even if they miss a text, providing an audible call to action.</p>
+            </div>
+            <div class="service-image">
+                <img src="{% static 'images/pcall.avif' %}" alt="Phone Call">
+            </div>
+        </div>
+
+        <div class="service-section" style="--i: 4;">
+            <div class="service-content">
+                <h2>Email Alerts</h2>
+                <p>Receive detailed email notifications with your location and, if recorded, your voice message. Perfect for contacts who prefer a digital record or need to coordinate help from a distance.</p>
+            </div>
+            <div class="service-image">
+                <img src="{% static 'images/email.png' %}" alt="Email Alerts">
+            </div>
+        </div>
+
+        <div class="service-section" style="--i: 5;">
+            <div class="service-content">
+                <h2>WhatsApp Messages</h2>
+                <p>Send instant WhatsApp messages with your location and emergency details to your registered contacts. This widely-used platform ensures quick communication in a familiar format.</p>
+            </div>
+            <div class="service-image">
+                <img src="{% static 'images/w.jpg' %}" alt="WhatsApp">
+            </div>
+        </div>
+
+        <div class="service-section" style="--i: 6;">
+            <div class="service-content">
+                <h2>Voice Assistance</h2>
+                <p>Activate the voice assistant with a custom phrase like "Activate Suraksha" to control the device hands-free. Issue commands, get navigation help, or trigger alerts—all with your voice, making safety effortless in high-stress moments.</p>
+            </div>
+            <div class="service-image">
+                <img src="{% static 'images/va.webp' %}" alt="Voice Assistance">
+            </div>
+        </div>
+
+        <div class="service-section" style="--i: 7;">
+            <div class="service-content">
+                <h2>Drone Safety Support</h2>
+                <p>Our cutting-edge drone service (in development) deploys an autonomous drone to your location upon an alert. It surveys the scene, relays live data to authorities, and ensures rapid response, bypassing obstacles like traffic.</p>
+            </div>
+            <div class="service-image">
+                <img src="{% static 'images/drone.jpg' %}" alt="Drone Safety">
+            </div>
+        </div>
+
+        <div class="service-section" style="--i: 8;">
+            <div class="service-content">
+                <h2>Alerts to Police & Help Centers</h2>
+                <p>Long press the button and use a custom keyword (e.g., "help me") to send your location and recorded message to nearby police stations, health centers, or fire services. This service ensures professional help arrives when you need it most.</p>
+            </div>
+            <div class="service-image">
+                <img src="{% static 'images/police.jpg' %}" alt="Help Centers">
+            </div>
+        </div>
+
+        <div class="service-section" style="--i: 9;">
+            <div class="service-content">
+                <h2>Device Customization</h2>
+                <p>Tailor your Suraksha device via our website—select design templates, set communication preferences (SMS, email, etc.), and customize voice assistant settings. Make it yours, from aesthetics to functionality.</p>
+            </div>
+            <div class="service-image">
+                <img src="{% static 'images/ring.webp' %}" alt="Customization">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mouse move star effect
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 3; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 5 + 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 1000);
+            }
+        });
+    </script>
+</body>
+</html>

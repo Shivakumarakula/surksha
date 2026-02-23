@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - About</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        /* Main Content */
+        .about-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            text-align: center;
+        }
+
+        .about-container h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate, fadeIn 1s ease-in;
+            margin-bottom: 40px;
+        }
+
+        .about-section {
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideUp 0.8s ease-out forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .about-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .about-section img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+
+        .about-section img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 221, 235, 0.5); }
+        }
+
+        /* Mouse Move Stars */
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 1s ease-out;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(2) rotate(180deg); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-container h1 { font-size: 2.5rem; }
+            .about-section h2 { font-size: 1.8rem; }
+            .about-section p { font-size: 1rem; }
+            .about-section img { max-width: 300px; }
+            .back-btn { font-size: 0.9rem; padding: 8px 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .about-container { margin: 40px auto; }
+            .about-container h1 { font-size: 2rem; }
+            .about-section h2 { font-size: 1.5rem; }
+            .about-section p { font-size: 0.9rem; }
+            .about-section img { max-width: 250px; }
+            .back-btn { top: 10px; left: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <button class="back-btn" onclick="window.location.href='/homepage2'">Back to Home</button>
+
+    <!-- About Content -->
+    <div class="about-container">
+        <h1>About Suraksha</h1>
+
+        <section class="about-section" style="--i: 1;">
+            <h2>Our Mission</h2>
+            <p>Suraksha was born out of a simple yet urgent need: to ensure personal safety for everyone, everywhere. In a world where vulnerability can strike anyone—girls facing harassment, boys threatened by groups, or the elderly and children caught in emergencies—we envisioned a solution that empowers individuals to call for help swiftly and discreetly. Our IoT-based device is designed to bridge the gap between distress and rescue, delivering real-time alerts and location data to registered contacts and nearby help centers.</p>
+            <img src="{% static 'images/oneclick.jpg' %}" alt="Suraksha Device">
+        </section>
+
+        <section class="about-section" style="--i: 2;">
+            <h2>The Journey</h2>
+            <p>The idea for Suraksha sparked from real-life stories of people who felt helpless in critical moments. We, a team of innovators and engineers, set out to create a compact, user-friendly IoT device equipped with a communication button, speaker/recorder, and blue LED border lights that glow upon activation. From initial sketches to prototypes, every step was driven by the goal to make safety accessible. Today, Suraksha stands as a testament to our commitment—combining hardware ingenuity with a seamless web interface to protect lives.</p>
+            <img src="{% static 'images/mca.jpeg' %}" alt="Development Process">
+        </section>
+
+        <section class="about-section" style="--i: 3;">
+            <h2>How It Works</h2>
+            <p>The Suraksha device is more than just a gadget—it’s a lifeline. A single click sends your location to loved ones. A long press activates a recording feature: speak your emergency, press again, and your message, along with your location, reaches registered contacts via SMS, email, or app. For urgent situations, like a girl at risk, a custom keyword (e.g., "help me") triggers alerts to nearby police or health centers. Plus, a voice assistant, activated by a phrase like "Activate Suraksha," guides you to safety with hands-free commands.</p>
+            <img src="{% static 'images/lovedones.jpg' %}" alt="Using Suraksha">
+        </section>
+
+        <section class="about-section" style="--i: 4;">
+            <h2>Customization & Control</h2>
+            <p>Our website complements the device perfectly. Register an account, create a virtual device, and customize it to your liking—choose templates, set communication links (parents, friends, emergency services), and define your voice assistant’s trigger phrase. Every action—turning on the device, pressing the button—is logged in our database, ensuring you’re always connected. It’s safety tailored to you, with the flexibility to edit settings anytime.</p>
+            <img src="{% static 'images/cus2.png' %}" alt="Customization Interface">
+        </section>
+
+        <section class="about-section" style="--i: 5;">
+            <h2>Our Vision for the Future</h2>
+            <p>We’re not stopping here. Suraksha’s future includes a smart drone system—when you send an alert, a drone autonomously flies to your location, assesses the situation, and coordinates with authorities. This overcomes delays like traffic or oversight, offering fast, accurate assistance. Our dream is a world where no one feels alone in danger, and Suraksha is the first step toward that reality.</p>
+            <img src="{% static 'images/drone.jpg' %}" alt="Smart Drone Vision">
+        </section>
+    </div>
+
+    <script>
+        // Mouse move star effect
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 3; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 5 + 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 1000);
+            }
+        });
+    </script>
+</body>
+</html>

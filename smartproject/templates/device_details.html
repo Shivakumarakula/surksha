@@ -1,0 +1,762 @@
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - {{ device.name }} Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            overflow-x: hidden;
+            transition: width 0.5s ease;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            display: block;
+            transition: color 0.3s, transform 0.3s;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        .sidebar a:hover {
+            color: #00ddeb;
+            transform: translateX(10px);
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2rem;
+            color: #ff4081;
+            cursor: pointer;
+        }
+
+        #main {
+            transition: margin-left 0.5s ease;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .openbtn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 999;
+        }
+
+        .openbtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .device-image {
+            flex: 1;
+            min-width: 200px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+
+        .device-image img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .device-details {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        p.type {
+            font-size: 1rem;
+            color: #00ddeb;
+            margin-bottom: 10px;
+        }
+
+        p.price {
+            font-size: 1.2rem;
+            color: #ff4081;
+            margin-bottom: 10px;
+        }
+
+        p.description {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            transition: box-shadow 0.3s;
+        }
+
+        select:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 221, 235, 0.5);
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        .error-message {
+            color: #ff4081;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+
+        .info-section {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        .info-section p {
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(0, 221, 235, 0.5); }
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 0.8s ease-out;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; max-width: 600px; }
+            .sidebar { padding-top: 50px; }
+            .sidebar a { font-size: 1rem; padding: 10px 15px; }
+            .sidebar .closebtn { font-size: 1.8rem; right: 10px; }
+            .openbtn { font-size: 1rem; padding: 8px 15px; }
+            h2 { font-size: 1.8rem; }
+            .device-image img { max-width: 200px; }
+            .info-section p { font-size: 0.9rem; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 10px; max-width: 100%; flex-direction: column; }
+            .sidebar a { font-size: 0.9rem; padding: 8px 10px; }
+            .sidebar .closebtn { font-size: 1.5rem; }
+            .openbtn { font-size: 0.9rem; padding: 6px 12px; top: 10px; left: 10px; }
+            h2 { font-size: 1.5rem; }
+            .device-image img { max-width: 150px; }
+            select, textarea { padding: 8px; font-size: 0.9rem; }
+            button[type="submit"] { font-size: 0.9rem; padding: 8px 15px; }
+            .info-section p { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="#" style="--i: 1;">Settings</a>
+        <a href="/add_device" style="--i: 2;">Add Device</a>
+        <a href="/add_contact" style="--i: 3;">Add Contacts</a>
+        <a href="/manage_contacts" style="--i: 4;">Edit Contacts</a>
+        <a href="/logout" style="--i: 5;">Logout</a>
+        <a href="/about" style="--i: 6;">About</a>
+    </div>
+
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">☰ Menu</button>
+        <div class="container">
+            <div class="device-image">
+                <img src="{% static device.image %}" alt="{{ device.name }}">
+            </div>
+            <div class="device-details">
+                <h2>{{ device.name }}</h2>
+                <p class="type">{{ device.type|title }}</p>
+                <p class="price">₹{{ device.price }}</p>
+                <p class="description">{{ device.description }}</p>
+                {% if error_message %}
+                    <p class="error-message">{{ error_message }}</p>
+                {% endif %}
+                <form method="POST" action="{% url 'device_details' device_name=device.name %}">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <label for="customization">Customization:</label>
+                        <select id="customization" name="customization" required>
+                            {% for option in device.customizations %}
+                                <option value="{{ option }}">{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="address">Delivery Address:</label>
+                        <textarea id="address" name="address" required placeholder="Enter your full address"></textarea>
+                    </div>
+                    <button type="submit">Confirm Order</button>
+                </form>
+            </div>
+            <div class="info-section">
+                <p>Customize your device and provide a delivery address to complete your order.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("sidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("sidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 4 + 2;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 15;
+                const offsetY = (Math.random() - 0.5) * 15;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 800);
+            }
+        });
+    </script>
+</body>
+</html> {% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha - {{ device.name }} Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            overflow-x: hidden;
+            transition: width 0.5s ease;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            display: block;
+            transition: color 0.3s, transform 0.3s;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        .sidebar a:hover {
+            color: #00ddeb;
+            transform: translateX(10px);
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2rem;
+            color: #ff4081;
+            cursor: pointer;
+        }
+
+        #main {
+            transition: margin-left 0.5s ease;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .openbtn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 999;
+        }
+
+        .openbtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .device-image {
+            flex: 1;
+            min-width: 200px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+
+        .device-image img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .device-details {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        p.type {
+            font-size: 1rem;
+            color: #00ddeb;
+            margin-bottom: 10px;
+        }
+
+        p.price {
+            font-size: 1.2rem;
+            color: #ff4081;
+            margin-bottom: 10px;
+        }
+
+        p.description {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            transition: box-shadow 0.3s;
+        }
+
+        select:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 221, 235, 0.5);
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(90deg, #00ddeb, #ff4081);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 221, 235, 0.5);
+        }
+
+        .error-message {
+            color: #ff4081;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+
+        .info-section {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        .info-section p {
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(0, 221, 235, 0.5); }
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            pointer-events: none;
+            animation: twinkle 0.8s ease-out;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; max-width: 600px; }
+            .sidebar { padding-top: 50px; }
+            .sidebar a { font-size: 1rem; padding: 10px 15px; }
+            .sidebar .closebtn { font-size: 1.8rem; right: 10px; }
+            .openbtn { font-size: 1rem; padding: 8px 15px; }
+            h2 { font-size: 1.8rem; }
+            .device-image img { max-width: 200px; }
+            .info-section p { font-size: 0.9rem; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 10px; max-width: 100%; flex-direction: column; }
+            .sidebar a { font-size: 0.9rem; padding: 8px 10px; }
+            .sidebar .closebtn { font-size: 1.5rem; }
+            .openbtn { font-size: 0.9rem; padding: 6px 12px; top: 10px; left: 10px; }
+            h2 { font-size: 1.5rem; }
+            .device-image img { max-width: 150px; }
+            select, textarea { padding: 8px; font-size: 0.9rem; }
+            button[type="submit"] { font-size: 0.9rem; padding: 8px 15px; }
+            .info-section p { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="/dashboard" style="--i: 1;">Dashboard</a>
+        <a href="/add_device" style="--i: 2;">Add Device</a>
+        <a href="/add_contact" style="--i: 3;">Add Contacts</a>
+        <a href="/manage_contacts" style="--i: 4;">Edit Contacts</a>
+        <a href="/logout" style="--i: 5;">Logout</a>
+        <a href="/about" style="--i: 6;">About</a>
+    </div>
+
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">☰ Menu</button>
+        <div class="container">
+            <div class="device-image">
+                <img src="{% static device.image %}" alt="{{ device.name }}">
+            </div>
+            <div class="device-details">
+                <h2>{{ device.name }}</h2>
+                <p class="type">{{ device.type|title }}</p>
+                <p class="price">₹{{ device.price }}</p>
+                <p class="description">{{ device.description }}</p>
+                {% if error_message %}
+                    <p class="error-message">{{ error_message }}</p>
+                {% endif %}
+                {% if razorpay_order_id %}
+                    <!-- Display Razorpay Checkout -->
+                    <form id="payment-form" method="POST" action="{% url 'payment_verify' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+                        <input type="hidden" name="razorpay_order_id" value="{{ razorpay_order_id }}">
+                        <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+                        <button type="button" id="rzp-button">Confirm Order</button>
+                    </form>
+                {% else %}
+                    <!-- Initial form to collect customization and address -->
+                    <form method="POST" action="{% url 'device_details' device_name=device.name %}">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <label for="customization">Customization:</label>
+                            <select id="customization" name="customization" required>
+                                {% for option in device.customizations %}
+                                    <option value="{{ option }}">{{ option }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="address">Delivery Address:</label>
+                            <textarea id="address" name="address" required placeholder="Enter your full address"></textarea>
+                        </div>
+                        <button type="submit">Confirm Order</button>
+                    </form>
+                {% endif %}
+            </div>
+            <div class="info-section">
+                <p>Customize your device and provide a delivery address to complete your order.</p>
+            </div>
+        </div>
+    </div>
+
+    {% if razorpay_order_id %}
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+            "key": "{{ razorpay_key_id }}",
+            "amount": {{ razorpay_amount }},
+            "currency": "INR",
+            "name": "Suraksha",
+            "description": "Order for {{ device.name }}",
+            "image": "{% static 'images/logo.png' %}",  // Add your logo in static/images/
+            "order_id": "{{ razorpay_order_id }}",
+            "handler": function (response) {
+                document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+                document.getElementById('razorpay_signature').value = response.razorpay_signature;
+                document.getElementById('payment-form').submit();
+            },
+            "prefill": {
+                "name": "Customer Name",  // You can fetch this from user profile
+                "email": "customer@example.com",
+                "contact": "9000090000"
+            },
+            "theme": {
+                "color": "#00ddeb"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        document.getElementById('rzp-button').onclick = function(e) {
+            rzp1.open();
+            e.preventDefault();
+        }
+    </script>
+    {% endif %}
+
+    <script>
+        function openNav() {
+            document.getElementById("sidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("sidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 4 + 2;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                const colors = ['#fff', '#00ddeb', '#ff4081'];
+                star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const offsetX = (Math.random() - 0.5) * 15;
+                const offsetY = (Math.random() - 0.5) * 15;
+                star.style.left = `${e.pageX + offsetX - size / 2}px`;
+                star.style.top = `${e.pageY + offsetY - size / 2}px`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 800);
+            }
+        });
+    </script>
+</body>
+</html>
